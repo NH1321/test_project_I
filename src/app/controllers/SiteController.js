@@ -10,8 +10,6 @@ class SiteController {
             courses: courses
         }))
         .catch(next);
-
-        // res.render('home');
     }
 
     // [GET] /search

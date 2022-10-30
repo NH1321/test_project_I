@@ -10,6 +10,31 @@ class CourseController {
         }))
         .catch(next);
     }
+
+    // [GET] /courses/create
+    create(req, res, next) {
+        res.render('courses/create');
+    }
+
+    // [POST] /courses/store
+    store(req, res, next) {
+        const formData = {...req.body};
+        formData.image = `https://img.youtube.com/vi/${req.body.videoID}/sddefault.jpg`;
+        const course = new Course(formData);
+        course.save()
+        .then(() => res.redirect('/'))
+        .catch(error => {
+            res.send('error');
+        });
+    }
+     // [GET] /courses/:id/edit
+     edit(req, res, next) {
+        Course.findById(req.params.id).lean()
+        .then(courses => res.render('courses/edit', {
+            courses: courses
+        }))
+        .catch(next);
+    }
 }
 
 module.exports = new CourseController;
